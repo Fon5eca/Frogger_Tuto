@@ -1,3 +1,45 @@
 [gd_scene format=3 uid="uid://dfq2iqhuccltx"]
 
+[ext_resource type="Texture2D" uid="uid://doghmovcgeltw" path="res://graphics/map.png" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://4vxvmd16aeo1" path="res://Scenes/game.gd" id="1_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://dghd7rii024ea" path="res://Scenes/player.tscn" id="2_qxrlw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qxrlw"]
+size = Vector2(20, 662)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrm1d"]
+size = Vector2(386, 20)
+
 [node name="Game" type="Node2D" unique_id=147275237]
+script = ExtResource("1_wrm1d")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=432941851]
+texture = ExtResource("1_ebmjs")
+
+[node name="Player" parent="Sprite2D" unique_id=855847937 instance=ExtResource("2_qxrlw")]
+position = Vector2(1, -5)
+
+[node name="Limits" type="StaticBody2D" parent="." unique_id=336696701]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Limits" unique_id=1473444580]
+position = Vector2(202, 0)
+shape = SubResource("RectangleShape2D_qxrlw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits" unique_id=1709759605]
+position = Vector2(-202, 0)
+shape = SubResource("RectangleShape2D_qxrlw")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Limits" unique_id=498238019]
+position = Vector2(0, -330)
+shape = SubResource("RectangleShape2D_wrm1d")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Limits" unique_id=66588456]
+position = Vector2(0, 330)
+shape = SubResource("RectangleShape2D_wrm1d")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1386790110]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=325596680]
+polygon = PackedVector2Array(-191, -318, 190, -319, 191, -191, -192, -195)
+
+[connection signal="body_entered" from="Area2D" to="." method="_finish_zone_body_entered"]
